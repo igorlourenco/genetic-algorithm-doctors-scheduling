@@ -1,3 +1,9 @@
+# Alunos:
+# Alessandro Gabriel
+# Igor Lourenço
+# Kaio Macedo
+# Leonardo Carvalho
+
 import random
 
 import matplotlib.pyplot as plt
@@ -15,8 +21,8 @@ HARD_CONSTRAINT_PENALTY = 10  # the penalty factor for a hard-constraint violati
 POPULATION_SIZE = 300
 P_CROSSOVER = 0.9  # probability for crossover
 P_MUTATION = 0.1   # probability for mutating an individual
-MAX_GENERATIONS = 200
-HALL_OF_FAME_SIZE = 30
+MAX_GENERATIONS = 200  # number of generations
+HALL_OF_FAME_SIZE = 30  # elitism
 
 # set the random seed:
 RANDOM_SEED = 42
@@ -57,8 +63,9 @@ toolbox.register("select", tools.selTournament, tournsize=2)
 toolbox.register("mate", tools.cxTwoPoint)
 toolbox.register("mutate", tools.mutFlipBit, indpb=1.0/len(dsp))
 
-
 # Genetic Algorithm flow:
+
+
 def main():
 
     # create initial population (generation 0):
@@ -70,7 +77,7 @@ def main():
     stats.register("avg", numpy.mean)
 
     # define the hall-of-fame object:
-    hof = tools.HallOfFame(HALL_OF_FAME_SIZE)
+    hof = tools.HallOfFame(HALL_OF_FAME_SIZE)  # elitism
 
     # perform the Genetic Algorithm flow with hof feature added:
     population, logbook = elitism.eaSimpleWithElitism(population, toolbox, cxpb=P_CROSSOVER, mutpb=P_MUTATION,

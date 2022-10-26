@@ -55,12 +55,16 @@ class DoctorSchedulingProblem:
         doctorShiftsDict = self.getDoctorShifts(schedule)
 
         # count the various violations:
+
+        # hard
         consecutiveShiftViolations = self.countConsecutiveShiftViolations(
             doctorShiftsDict)
         shiftsPerWeekViolations = self.countShiftsPerWeekViolations(doctorShiftsDict)[
             1]
         doctorsPerShiftViolations = self.countDoctorsPerShiftViolations(doctorShiftsDict)[
             1]
+
+        # soft
         shiftPreferenceViolations = self.countShiftPreferenceViolations(
             doctorShiftsDict)
 
@@ -69,7 +73,7 @@ class DoctorSchedulingProblem:
             doctorsPerShiftViolations + shiftsPerWeekViolations
         softConstraintViolations = shiftPreferenceViolations
 
-        return self.hardConstraintPenalty * hardConstraintViolations + softConstraintViolations
+        return self.hardConstraintPenalty * hardConstraintViolations + softConstraintViolations  # 101
 
     def getDoctorShifts(self, schedule):
         """
@@ -162,14 +166,20 @@ class DoctorSchedulingProblem:
 
             print('\n\n')
 
-        print("consecutive shift violations = ",
-              self.countConsecutiveShiftViolations(doctorShiftsDict))
-        print()
-
         weeklyShiftsList, violations = self.countShiftsPerWeekViolations(
             doctorShiftsDict)
-        print("weekly Shifts = ", weeklyShiftsList)
+        print("weekly Shifts = ")
+        index = 0
+        for weeklyShifts in weeklyShiftsList:
+            print(self.doctors[index], weeklyShifts)
+            index += 1
+
+        print('\n\n')
         print("Shifts Per Week Violations = ", violations)
+        print()
+
+        print("consecutive shift violations = ",
+              self.countConsecutiveShiftViolations(doctorShiftsDict))
         print()
 
         totalPerShiftList, violations = self.countDoctorsPerShiftViolations(
@@ -201,3 +211,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+# [1 1 1 0 1 0 1 0 0 1] = 718
